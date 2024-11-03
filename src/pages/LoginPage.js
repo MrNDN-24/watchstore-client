@@ -7,15 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import "../styles/Auth.css";
 
 const LoginPage = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState(""); // Đổi name thành username
   const [password, setPassword] = useState("");
-  const [errorName, setErrorName] = useState(""); 
+  const [errorUsername, setErrorUsername] = useState(""); // Đổi errorName thành errorUsername
   const [errorPassword, setErrorPassword] = useState(""); 
   const navigate = useNavigate();
 
   const handleInputChange = (input) => {
-    if (input === 'name') {
-      setErrorName(""); 
+    if (input === 'username') {
+      setErrorUsername(""); // Đổi name thành username
     } else if (input === 'password') {
       setErrorPassword("");
     }
@@ -30,8 +30,8 @@ const LoginPage = () => {
     let hasError = false;
 
     // Kiểm tra dữ liệu nhập
-    if (!name.trim()) {
-      setErrorName("Tên đăng nhập không được để trống.");
+    if (!username.trim()) { // Đổi name thành username
+      setErrorUsername("Tên đăng nhập không được để trống.");
       hasError = true;
     }
     if (!password.trim()) {
@@ -43,7 +43,7 @@ const LoginPage = () => {
     if (hasError) return;
 
     try {
-      const user = await loginUser({ name, password });
+      const user = await loginUser({ username, password }); // Đổi name thành username
       toast.success("Đăng nhập thành công"); 
       localStorage.setItem("token", user.token);
       navigate("/homepage");
@@ -92,14 +92,14 @@ const LoginPage = () => {
             <input
               type="text"
               placeholder="Tên đăng nhập"
-              value={name}
+              value={username} // Đổi name thành username
               onChange={(e) => {
-                setName(e.target.value);
-                handleInputChange('name'); // Reset lỗi khi nhập
+                setUsername(e.target.value); // Đổi name thành username
+                handleInputChange('username'); // Đổi name thành username
               }}
-              onFocus={() => handleFocus('name')} // Reset lỗi khi focus vào trường
+              onFocus={() => handleFocus('username')} // Đổi name thành username
             />
-            {errorName && <p className="error">{errorName}</p>} {/* Hiển thị lỗi nếu có */}
+            {errorUsername && <p className="error">{errorUsername}</p>} {/* Hiển thị lỗi nếu có */}
           </div>
           <div>
             <input

@@ -6,17 +6,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../styles/Auth.css";
 
 const RegisterPage = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState(""); // Thay đổi từ name thành username
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorName, setErrorName] = useState(""); // Lỗi cho tên
+  const [errorUsername, setErrorUsername] = useState(""); // Lỗi cho tên đăng nhập
   const [errorEmail, setErrorEmail] = useState(""); // Lỗi cho email
   const [errorPassword, setErrorPassword] = useState(""); // Lỗi cho mật khẩu
   const navigate = useNavigate();
 
   const handleInputChange = (input) => {
-    if (input === 'name') {
-      setErrorName(""); // Xóa lỗi tên khi nhập
+    if (input === 'username') {
+      setErrorUsername(""); // Xóa lỗi tên khi nhập
     } else if (input === 'email') {
       setErrorEmail(""); // Xóa lỗi email khi nhập
     } else if (input === 'password') {
@@ -28,9 +28,9 @@ const RegisterPage = () => {
     e.preventDefault();
     let hasError = false;
 
-    // Kiểm tra độ dài tên
-    if (name.length < 3) {
-      setErrorName("Tên phải có ít nhất 3 ký tự");
+    // Kiểm tra độ dài tên đăng nhập
+    if (username.length < 3) {
+      setErrorUsername("Tên đăng nhập phải có ít nhất 3 ký tự");
       hasError = true;
     }
 
@@ -50,7 +50,7 @@ const RegisterPage = () => {
     if (hasError) return;
 
     try {
-      await registerUser({ name, email, password });
+      await registerUser({ username, email, password }); // Gửi username thay vì name
       toast.success("Người dùng đã đăng ký thành công"); 
       setTimeout(() => {
         navigate("/login");
@@ -76,15 +76,15 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="Tên"
-            value={name}
+            placeholder="Tên đăng nhập" // Cập nhật placeholder
+            value={username} // Cập nhật giá trị
             onChange={(e) => {
-              setName(e.target.value);
-              handleInputChange('name'); // Reset lỗi khi nhập
+              setUsername(e.target.value);
+              handleInputChange('username'); // Reset lỗi khi nhập
             }}
-            onFocus={() => handleInputChange("name")} // Xóa lỗi khi người dùng click vào trường tên
+            onFocus={() => handleInputChange("username")} // Xóa lỗi khi người dùng click vào trường tên đăng nhập
           />
-          {errorName && <p className="error">{errorName}</p>} {/* Hiển thị lỗi cho tên */}         
+          {errorUsername && <p className="error">{errorUsername}</p>} {/* Hiển thị lỗi cho tên đăng nhập */}
 
           <input
             type="email"
