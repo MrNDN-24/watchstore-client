@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import { loginUser, loginUserWithGoogle } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import { toast, ToastContainer } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css"; 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/Auth.css";
 
 const LoginPage = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState(""); // Đổi name thành username
   const [password, setPassword] = useState("");
-  const [errorName, setErrorName] = useState(""); 
-  const [errorPassword, setErrorPassword] = useState(""); 
+  const [errorUsername, setErrorUsername] = useState(""); // Đổi errorName thành errorUsername
+  const [errorPassword, setErrorPassword] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (input) => {
-    if (input === 'name') {
-      setErrorName(""); 
-    } else if (input === 'password') {
+    if (input === "username") {
+      setErrorUsername(""); // Đổi name thành username
+    } else if (input === "password") {
       setErrorPassword("");
     }
   };
@@ -30,8 +30,9 @@ const LoginPage = () => {
     let hasError = false;
 
     // Kiểm tra dữ liệu nhập
-    if (!name.trim()) {
-      setErrorName("Tên đăng nhập không được để trống.");
+    if (!username.trim()) {
+      // Đổi name thành username
+      setErrorUsername("Tên đăng nhập không được để trống.");
       hasError = true;
     }
     if (!password.trim()) {
@@ -43,8 +44,8 @@ const LoginPage = () => {
     if (hasError) return;
 
     try {
-      const user = await loginUser({ name, password });
-      toast.success("Đăng nhập thành công"); 
+      const user = await loginUser({ username, password }); // Đổi name thành username
+      toast.success("Đăng nhập thành công");
       localStorage.setItem("token", user.token);
       navigate("/homepage");
     } catch (err) {
@@ -55,34 +56,34 @@ const LoginPage = () => {
   const handleGoogleLoginSuccess = async (response) => {
     try {
       const user = await loginUserWithGoogle(response.credential);
-      toast.success("Đăng nhập thành công với Google"); 
+      toast.success("Đăng nhập thành công với Google");
       localStorage.setItem("token", user.token);
       navigate("/homepage");
     } catch (err) {
-      toast.error("Đăng nhập Google thất bại"); 
+      toast.error("Đăng nhập Google thất bại");
     }
   };
 
   const handleGoogleLoginFailure = () => {
-    toast.error("Đăng nhập Google thất bại"); 
+    toast.error("Đăng nhập Google thất bại");
   };
 
   useEffect(() => {
-    toast.info("Chào mừng bạn đến với trang đăng nhập!"); 
+    toast.info("Chào mừng bạn đến với trang đăng nhập!");
   }, []);
 
   return (
     <div className="auth-container">
-      <ToastContainer 
-        position="top-right" 
-        autoClose={3000} 
-        hideProgressBar={false} 
-        newestOnTop={false} 
-        closeOnClick 
-        rtl={false} 
-        pauseOnFocusLoss 
-        draggable 
-        pauseOnHover 
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
       <div className="image-section"></div>
       <div className="form-section">
@@ -92,14 +93,15 @@ const LoginPage = () => {
             <input
               type="text"
               placeholder="Tên đăng nhập"
-              value={name}
+              value={username} // Đổi name thành username
               onChange={(e) => {
-                setName(e.target.value);
-                handleInputChange('name'); // Reset lỗi khi nhập
+                setUsername(e.target.value); // Đổi name thành username
+                handleInputChange("username"); // Đổi name thành username
               }}
-              onFocus={() => handleFocus('name')} // Reset lỗi khi focus vào trường
+              onFocus={() => handleFocus("username")} // Đổi name thành username
             />
-            {errorName && <p className="error">{errorName}</p>} {/* Hiển thị lỗi nếu có */}
+            {errorUsername && <p className="error">{errorUsername}</p>}{" "}
+            {/* Hiển thị lỗi nếu có */}
           </div>
           <div>
             <input
@@ -108,11 +110,12 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                handleInputChange('password'); // Reset lỗi khi nhập
+                handleInputChange("password"); // Reset lỗi khi nhập
               }}
-              onFocus={() => handleFocus('password')} // Reset lỗi khi focus vào trường
+              onFocus={() => handleFocus("password")} // Reset lỗi khi focus vào trường
             />
-            {errorPassword && <p className="error">{errorPassword}</p>} {/* Hiển thị lỗi nếu có */}
+            {errorPassword && <p className="error">{errorPassword}</p>}{" "}
+            {/* Hiển thị lỗi nếu có */}
           </div>
           <button type="submit">Đăng Nhập</button>
         </form>
