@@ -67,33 +67,27 @@ const UserProfile = () => {
     // Ở đây bạn có thể thêm logic để lưu thông tin vào backend
   };
 
-  const [errorName, setErrorName] = useState("");
-  const [errorEmail, setErrorEmail] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let hasError = false;
 
     // Kiểm tra định dạng email
     if (!/\S+@\S+\.\S+/.test(loggedInUser.email)) {
-      setErrorEmail("Email không hợp lệ");
-      hasError = true;
+      alert("Định dạng email không đúng. Vui lòng thử lại.");
+      return;
     }
 
     if (!loggedInUser.name) {
-      setErrorName("Họ tên không được để trống");
-      hasError = true;
+      alert("Họ tên không được để trống");
+      return;
     }
 
     // Kiểm tra mật khẩu
     if (password !== "" && password.length < 6) {
-      setErrorPassword("Mật khẩu phải có ít nhất 6 ký tự");
-      hasError = true;
+      alert("Mật khẩu phải có ít nhất 6 ký tự");
+      return;
     }
 
     // Nếu có lỗi, dừng lại không gửi yêu cầu
-    if (hasError) return;
 
     // Nếu không có lỗi, gọi hàm lưu thông tin
     await handleSave();
@@ -184,7 +178,6 @@ const UserProfile = () => {
             <div className="mt-6">
               {renderField("Họ tên", "name", loggedInUser.name)}
             </div>
-            {errorName && <p className="error">{errorName}</p>}{" "}
             <div className="flex flex-col gap-1 mt-6">
               <label className="text-sm font-medium text-gray-700">
                 Username:
@@ -194,7 +187,6 @@ const UserProfile = () => {
             <div className="mt-6">
               {renderField("Email", "email", loggedInUser.email)}
             </div>
-            {errorEmail && <p className="error">{errorEmail}</p>}{" "}
             {isEditing && (
               <>
                 <div className="flex flex-col gap-1 mt-6">
@@ -208,7 +200,6 @@ const UserProfile = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  {errorPassword && <p className="error">{errorPassword}</p>}{" "}
                 </div>
                 <div className="flex flex-col gap-1 mt-6">
                   <label className="text-sm font-medium text-gray-700">

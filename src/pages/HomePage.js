@@ -56,7 +56,6 @@ const HomePage = () => {
           </div>
         </div>
         <ProductList />
-        <button onClick={handleLogout}>Đăng Xuất</button>
       </main>
       <Footer /> {/* Thêm Footer */}
     </div>
